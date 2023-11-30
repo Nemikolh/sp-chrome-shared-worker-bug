@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Share worker bug</title></head>
+    <body>
+        <h1>Contexts</h1>
+        <div id="info">
+            Loading...
+        </div>
+        <button onclick="getInfo()">Get Contexts</button>
+        <script>
+            const worker = new SharedWorker('/worker.js');
+
+            function getInfo() {
+                worker.port.postMessage({ type: 'info' });
+            }
+
+            worker.port.postMessage({ type: 'register', id: 'main' });
+
+            worker.port.onmessage = (message) => {
+                window.info.innerHTML = message.data.join(', ');
+            };
+
+            setInterval(getInfo, 300);
+        </script>
+        <iframe src="http://bar.localhost:2345/"></iframe>
+    </body>
+</html>

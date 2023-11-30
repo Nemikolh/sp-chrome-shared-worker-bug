@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Iframe</title></head>
+    <body>
+        <script>
+            const worker = new SharedWorker('/worker.js');
+            worker.port.postMessage({ type: 'register', id: 'iframe' });
+        </script>
+    </body>
+</html>
